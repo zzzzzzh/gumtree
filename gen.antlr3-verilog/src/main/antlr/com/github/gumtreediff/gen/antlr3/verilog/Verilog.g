@@ -1,4 +1,4 @@
-grammar verilog;
+grammar Verilog;
 
 options
 	{
