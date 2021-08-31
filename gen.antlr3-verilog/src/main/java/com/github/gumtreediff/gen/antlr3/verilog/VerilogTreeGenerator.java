@@ -39,7 +39,7 @@ public class VerilogTreeGenerator extends AbstractAntlr3TreeGenerator<VerilogLex
 
     @Override
     protected RuleReturnScope getStartRule(VerilogParser parser) throws RecognitionException {
-        return parser.script();
+        return parser.source_text();
     }
 
     @Override

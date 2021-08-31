@@ -2,13 +2,49 @@ grammar Verilog;
 
 options
 	{
-	language= C;
+	language= Java;
 	output=AST;
-	ASTLabelType= pANTLR3_BASE_TREE;
+    ASTLabelType = CommonTree;
 	//tokenVocab = Verilog;  //call the vocabulary 'Verilog'
     //testLiterals = false;  don't automatically test for literals
     k = 3;                  // 3 characters of lookahead
 	}
+
+@header { package com.github.gumtreediff.gen.antlr3.verilog; }
+@lexer::header { package com.github.gumtreediff.gen.antlr3.verilog; }
+@rulecatch {
+  catch(RecognitionException re){
+    throw re; // Stop at first error
+  }
+}
+@lexer::rulecatch {
+  catch(RecognitionException re){
+    throw re; // Stop at first error ??? Doesn't work at all ??? why ??
+  }
+}
+@members {
+  public void display_next_tokens(){
+    System.err.print("Allowed tokens: ");
+    for(int next: next_tokens())
+      System.err.print(tokenNames[next]);
+    System.err.println("");
+  }
+  public int[] next_tokens(){
+    return state.following[state._fsp].toArray();
+  }
+}
+
+@lexer::members{
+  int incomplete_stack[] = new int[100]; // MAX_SIZE ???
+  int incomplete_depth = 0;
+  @Override
+  public void reportError(RecognitionException e) {
+        throw new RuntimeException(e);
+    }
+}
+@lexer::init{
+  incomplete_stack[incomplete_depth] = 0;
+}
 //-----------------------------------------------------------------------------
 // Source Text
 //-----------------------------------------------------------------------------
