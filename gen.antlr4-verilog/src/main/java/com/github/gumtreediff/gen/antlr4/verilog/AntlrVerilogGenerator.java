@@ -18,7 +18,7 @@
  * Copyright 2011-2015 Floréal Morandat <florealm@gmail.com>
  */
 
-package com.github.gumtreediff.gen.antlr4.matlab;
+package com.github.gumtreediff.gen.antlr4.verilog;
 
 import com.github.gumtreediff.gen.Register;
 import com.github.gumtreediff.gen.antlr4.AbstractAntlr4TreeGenerator;
@@ -31,13 +31,13 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import java.io.IOException;
 import java.io.Reader;
 
-@Register(id = "matlab-antlr", accept =  "\\.m$")
-public class AntlrMatlabGenerator extends AbstractAntlr4TreeGenerator {
+@Register(id = "verilog-antlr", accept =  "\\.v$")
+public class AntlrVerilogGenerator extends AbstractAntlr4TreeGenerator {
     @Override
     protected ParseTree getStartSymbol(Reader r) throws RecognitionException, IOException {
-        MatlabLexer lexer = new MatlabLexer(new ANTLRInputStream(r));
-        MatlabParser parser = new MatlabParser(new CommonTokenStream(lexer));
-        MatlabParser.Primary_expressionContext script = parser.primary_expression();
+        VerilogLexer lexer = new VerilogLexer(new ANTLRInputStream(r));
+        VerilogParser parser = new VerilogParser(new CommonTokenStream(lexer));
+        VerilogParser.Source_textContext script = parser.source_text();
         return script;
     }
 
